@@ -1,4 +1,5 @@
 import express from "express";
+import { pool } from "./config/database.js";
 
 const app = express();
 
@@ -6,6 +7,13 @@ const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(express.json());
+
+
+const result = await pool.query(
+  "SELECT NOW() AS current_time"
+);
+
+console.log(result.rows);
 
 app.get("/", (req, res) => {
   res.status(200).json({
